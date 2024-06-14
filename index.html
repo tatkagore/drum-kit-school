@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Primary Meta Tags -->
-    <title>Drum Kit School</title> <!-- Changed title -->
+    <title>Drum Kit School</title>
     <meta name="title" content="Drum Kit School">
-    <meta name="keywords" content="drum, drum kit, school, music education, learn drums">
+    <meta name="keywords" content="drum, drum kit, kit, js30, javascript 30, education">
     <meta name="robots" content="index, follow">
-    <meta name="description" content="Learn to play drums online with Drum Kit School.">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="revisit-after" content="7 days">
+    <meta name="description" content="Experience the thrill of playing drums with Drum Kit School.">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tatkagore.github.io/drum-kit-school/">
     <meta property="og:title" content="Drum Kit School">
-    <meta property="og:description" content="Interactive drum learning experience.">
-    <meta property="og:image" content="file:///Users/tatiana.simmer/Desktop/drum-kit/drum-kit-school/meta.jpg"> <!-- Change this to your image URL -->
+    <meta property="og:description" content="Experience the thrill of playing drums with Drum Kit School.">
+    <meta property="og:image" content="https://tatkagore.github.io/drum-kit-school/meta.jpg"> <!-- Update this with your own image URL -->
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://tatkagore.github.io/drum-kit-school/">
     <meta property="twitter:title" content="Drum Kit School">
-    <meta property="twitter:description" content="Interactive drum learning experience.">
-    <meta property="twitter:image" content="/Users/tatiana.simmer/Desktop/drum-kit/drum-kit-school/meta.jpg"> <!-- Change this to your image URL -->
+    <meta property="twitter:description" content="Experience the thrill of playing drums with Drum Kit School.">
+    <meta property="twitter:image" content="https://tatkagore.github.io/drum-kit-school/meta.jpg"> <!-- Update this with your own image URL -->
 
-    <link rel="shortcut icon" href="favicon.png" type="image/x-icon"> <!-- Change this to your favicon file -->
-
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> <!-- Update this with your own favicon -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@900&display=swap" rel="stylesheet">
@@ -41,10 +43,14 @@
             place-content: center;
             text-align: center;
             background-color: #efefef;
+            background: url();
             font-family: 'DM Serif Display', serif;
-            -webkit-user-select: none; /* Safari */
-            -ms-user-select: none; /* IE 10 and IE 11 */
-            user-select: none; /* Standard syntax */
+            -webkit-user-select: none;
+            /* Safari */
+            -ms-user-select: none;
+            /* IE 10 and IE 11 */
+            user-select: none;
+            /* Standard syntax */
         }
 
         h1 {
@@ -73,7 +79,8 @@
             margin: auto;
         }
 
-        a, a:visited {
+        a,
+        a:visited {
             color: #240045;
         }
 
@@ -106,14 +113,120 @@
         }
     </style>
 </head>
+
 <body>
     <a class="title" href="" style="text-decoration: none;">
-        <h1>Drum Kit School <i class="fa-solid fa-drum"></i></h1>
+        <h1>Drum Kit <i class="fa-solid fa-drum"></i></h1>
     </a>
     <div id="drumkit"></div>
-    <div class="footnote">Made with <i class="fas fa-heart" style="color: red;" aria-hidden="true"></i> by <a href="https://tatkagore.github.io/drum-kit-school" target="_blank">Tatiana Simmer</a></div>
+    <div class="footnote">Made with <i class="fas fa-heart" style="color: red;" aria-hidden="true"></i> by <a
+            href="https://github.com/tatkagore" target="_blank">Tatiana Simmer</a></div>
+    <script type="text/javascript">
+        // Defining Types Of Drum Elements Available
+        var data = {
+            'A': {
+                name: 'Clap',
+                sound: 'sounds/clap.wav',
+            },
+            'S': {
+                name: 'HiHat',
+                sound: 'sounds/hihat.wav'
+            },
+            'D': {
+                name: 'Kick',
+                sound: 'sounds/kick.wav'
+            },
+            'F': {
+                name: 'OpenHat',
+                sound: 'sounds/openhat.wav'
+            },
+            'G': {
+                name: 'Boom',
+                sound: 'sounds/boom.wav'
+            },
+            'H': {
+                name: 'Ride',
+                sound: 'sounds/ride.wav'
+            },
+            'J': {
+                name: 'Snare',
+                sound: 'sounds/snare.wav'
+            },
+            'K': {
+                name: 'Tom',
+                sound: 'sounds/tom.wav'
+            },
+            'L': {
+                name: 'Tink',
+                sound: 'sounds/tink.wav'
+            }
+        };
 
-    <!-- JavaScript here -->
+        // Get the drumkit element from the DOM
+        var drumkit = document.getElementById("drumkit");
 
+        // Create HTML elements for each drum element and add them to the DOM
+        function construct() {
+            for (var key in data) {
+                var drumElement = document.createElement('div');
+                drumElement.classList.add('element', data[key].name);
+                var h2 = document.createElement('h2');
+                h2.textContent = key;
+
+                var span = document.createElement('span');
+                span.textContent = data[key].name;
+
+                drumElement.appendChild(h2);
+                drumElement.append(span);
+                drumkit.appendChild(drumElement);
+
+                // Play the sound corresponding to the clicked drum element
+                drumElement.addEventListener('click', function (event) {
+                    var key = event.currentTarget.querySelector('h2').textContent;
+                    playDrum(key.toUpperCase());
+                });
+            }
+        };
+
+        // Play the sound corresponding to the pressed key
+        function playDrum(key) {
+            if (data.hasOwnProperty(key)) {
+                var drumElement = document.querySelector('.element.' + data[key].name);
+                drumElement.classList.add('active');
+                var audio = new Audio();
+                audio.src = data[key].sound;
+                audio.play();
+
+                // Remove the active class from the drum element after the sound finishes playing
+                audio.addEventListener('timeupdate', function () {
+                    if (audio.currentTime >= audio.duration / 32) {
+                        drumElement.classList.remove('active');
+                        audio.removeEventListener('timeupdate', arguments.callee);
+                    }
+                });
+            } else {
+                // Show an error message in the console for invalid keys
+                console.log(
+                    "OOPS!\nIt looks like you've pressed a key that isn't defined.\nCould you please try again with a valid key?\nThank you!"
+                );
+                // Clear the console after 2.5 seconds
+                setTimeout(function () {
+                    console.clear();
+                }, 10000);
+            }
+        };
+
+        // Handle key press events
+        function keyEvents(event) {
+            playDrum(event.key.toUpperCase());
+        };
+
+        // Listen for any key press events and call keyEvents function to handle the key press
+        window.addEventListener('keydown', keyEvents);
+
+        // Add drum elements to the drumkit
+        construct();
+    </script>
 </body>
+
 </html>
